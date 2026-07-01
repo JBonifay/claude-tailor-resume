@@ -17,3 +17,7 @@ Thumbs.db
 # Build / temp
 *.log
 *.tmp
+
+# Generated previews
+build/preview.pdf
+build/*.preview.pdf
