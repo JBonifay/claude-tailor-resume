@@ -1,0 +1,19 @@
+# JetBrains IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*~
+
+# Build / temp
+*.log
+*.tmp
