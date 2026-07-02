@@ -21,3 +21,9 @@ Thumbs.db
 # Generated previews
 build/preview.pdf
 build/*.preview.pdf
+
+# Personal resume content (kept local, never published)
+2026.md
+2026.html
+2026.pdf
+offers/
