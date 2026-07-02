@@ -1,4 +1,6 @@
-# tailor-resume — a Claude Code skill
+# claude-tailor-resume
+
+> A [Claude Code](https://claude.com/claude-code) skill (`tailor-resume`).
 
 A [Claude Code](https://claude.com/claude-code) **skill** that turns your CV into a
 job-tailored, ATS-friendly PDF. You give it your résumé as a PDF and a job offer in any form;
@@ -30,8 +32,8 @@ The skill lives in this repo under `.claude/skills/tailor-resume/`, so it's avai
 you run Claude Code from this folder:
 
 ```bash
-git clone https://github.com/JBonifay/Resume.git
-cd Resume
+git clone https://github.com/JBonifay/claude-tailor-resume.git
+cd claude-tailor-resume
 claude
 ```
 
