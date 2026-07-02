@@ -1,13 +1,22 @@
-# Resume — tailored per job offer, driven by Claude Code
+# tailor-resume — a Claude Code skill
 
-A small pipeline for generating a **job-tailored CV** from a single master résumé, then
-rendering it to a clean, ATS-friendly PDF. The tailoring is done by
-[Claude Code](https://claude.com/claude-code): you hand it a job offer, it reshapes your
-master CV to match, and renders the PDF.
+A [Claude Code](https://claude.com/claude-code) **skill** that turns your CV into a
+job-tailored, ATS-friendly PDF. You give it your résumé as a PDF and a job offer in any form;
+it reshapes your CV to the offer's language and vocabulary and renders a clean single-column
+PDF. It **never invents experience** — it only reorders, rephrases, emphasizes, translates, and
+hides off-topic content.
 
-> The repo ships with the **tooling only** — the template, the renderer, and this guide.
-> Your actual résumé (with your personal contact details) stays on your machine and is
-> gitignored. You bring your own master CV.
+## What it does
+
+Three steps, run by the skill:
+
+1. **CV in** — you provide the **PDF of your current CV**. Claude extracts every real fact into
+   a local `master.md` (your source of truth, gitignored).
+2. **Offer in (any form)** — you provide the **job offer** as a URL, pasted text, PDF, or
+   screenshot. Claude detects its language and extracts keywords, must-haves, seniority, and
+   stack, then maps them against your master CV.
+3. **Tailored CV out** — Claude builds a tailored résumé in the offer's language and renders
+   `offers/<company>/resume.pdf`.
 
 ## Prerequisites
 
@@ -15,69 +24,63 @@ master CV to match, and renders the PDF.
 - Node.js
 - Google Chrome (`google-chrome`, used headless to print the PDF)
 
-## Setup
+## Install
 
-Create your master CV as `2026.md` in the repo root — this is your **source of truth**.
-It holds every real fact about you (experience, projects, skills, contact details). Keep it
-complete; tailoring only ever *reorders, rephrases, emphasizes, or hides* — it never invents.
+The skill lives in this repo under `.claude/skills/tailor-resume/`, so it's available whenever
+you run Claude Code from this folder:
 
+```bash
+git clone https://github.com/JBonifay/Resume.git
+cd Resume
+claude
 ```
-2026.md            # your master CV in Markdown  (gitignored — stays local)
+
+To make it available in **any** project, copy it into your personal skills directory instead:
+
+```bash
+cp -r .claude/skills/tailor-resume ~/.claude/skills/
 ```
 
-Optionally keep a `2026.html` version (a clean base, using `template/style.css`, that
-per-offer CVs are cloned from). These files are gitignored so they never get published.
+## Use
 
-## How to use with Claude Code
+Inside Claude Code, just ask — for example:
 
-1. Open this folder in Claude Code:
-   ```bash
-   cd Resume
-   claude
-   ```
+> Tailor my resume for this offer: https://example.com/jobs/senior-backend-engineer
 
-2. Give Claude a **job-offer URL** or paste the **job description**, e.g.:
+or
 
-   > Tailor my CV for this offer: https://example.com/jobs/senior-backend-engineer
+> /tailor-resume
 
-   or
-
-   > Here's a job description, tailor my CV for it:
-   > ```
-   > <paste the offer text>
-   > ```
-
-3. Claude then:
-   - Fetches / reads the offer and extracts **keywords, must-haves, seniority, and stack**.
-   - Detects the offer's **language** (FR/EN) → produces the tailored CV in that language.
-   - Builds a tailored résumé from `2026.md`: reorders sections, surfaces the most relevant
-     projects/skills, rewrites the title + summary + bullets using the offer's vocabulary, and
-     hides off-topic content. **No fabricated experience.**
-   - Renders a clean, single-column, ATS-friendly **PDF**.
-
-4. The deliverable lands in `offers/<company>/resume.pdf`.
+Claude will ask for your CV PDF (step 1), then the offer (step 2), then produce the tailored
+PDF (step 3). It confirms the extracted master looks complete before tailoring, and finishes
+with a summary of what it emphasized, reordered, or omitted.
 
 ## Layout
 
 ```
-2026.md                     # master CV (source of truth — gitignored, local only)
-2026.html                   # master CV in the clean template (gitignored, local only)
-template/style.css          # shared design (A4, single-column, ATS-friendly)
-build/render.mjs            # HTML -> PDF via headless Chrome
-offers/<company>/           # per-offer working dir (gitignored)
-  ├── offer.md              # the offer (fetched or pasted)
-  ├── analysis.md           # extracted keywords / gaps / mapping
-  ├── resume.html           # tailored CV
-  └── resume.pdf            # final deliverable
+.claude/skills/tailor-resume/
+  ├── SKILL.md                  # the skill: the 3-step tailoring workflow
+  ├── assets/
+  │   ├── style.css             # A4, single-column, ATS-friendly design
+  │   └── resume-template.html  # PII-free structure reference to clone
+  └── scripts/
+      └── render.mjs            # HTML -> PDF via headless Chrome
+
+# created locally at use time (all gitignored):
+master.md                       # facts extracted from your CV PDF (source of truth)
+offers/<company>/
+  ├── offer.md                  # the captured offer
+  ├── analysis.md               # keywords / gaps / requirement→evidence mapping
+  ├── resume.html               # tailored CV (stylesheet inlined)
+  └── resume.pdf                # final deliverable
 ```
 
-## Render command
+## Render command (manual)
 
-If you want to render an HTML CV to PDF yourself (Claude runs this for you during tailoring):
+Claude runs this for you, but you can render any HTML CV yourself:
 
 ```bash
-node build/render.mjs <input.html> <output.pdf>
+node .claude/skills/tailor-resume/scripts/render.mjs <input.html> <output.pdf>
 ```
 
-Requires `google-chrome` (headless) and Node.js. A one-off NSS certificate warning from
-Chrome during rendering is harmless.
+A one-off NSS certificate warning from Chrome during rendering is harmless.

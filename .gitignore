@@ -1,3 +1,7 @@
+# This repo ships a Claude Code skill under .claude/skills/ — override any
+# global ignore of .claude/ so the skill is published.
+!.claude/
+
 # JetBrains IDE
 .idea/
 *.iml
@@ -18,11 +22,8 @@ Thumbs.db
 *.log
 *.tmp
 
-# Generated previews
-build/preview.pdf
-build/*.preview.pdf
-
 # Personal resume content (kept local, never published)
+master.md
 2026.md
 2026.html
 2026.pdf
