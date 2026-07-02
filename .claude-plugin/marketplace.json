@@ -1,0 +1,14 @@
+{
+  "name": "claude-tailor-resume",
+  "owner": {
+    "name": "Joffrey B."
+  },
+  "description": "Marketplace for the tailor-resume Claude Code skill.",
+  "plugins": [
+    {
+      "name": "tailor-resume",
+      "source": "./",
+      "description": "Build a job-tailored, ATS-friendly resume PDF from your CV. CV PDF in -> job offer (any form) -> tailored PDF out. Never fabricates experience."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "tailor-resume",
+  "version": "1.0.0",
+  "description": "Build a job-tailored, ATS-friendly resume PDF from your CV — driven by Claude Code. Give it your CV as a PDF and a job offer in any form; it reshapes your CV to the offer and renders a clean single-column PDF. Never fabricates experience.",
+  "author": {
+    "name": "Joffrey B."
+  },
+  "homepage": "https://github.com/JBonifay/claude-tailor-resume",
+  "repository": "https://github.com/JBonifay/claude-tailor-resume",
+  "keywords": ["resume", "cv", "ats", "pdf", "job-application", "tailoring"]
+}

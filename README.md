@@ -28,8 +28,20 @@ Three steps, run by the skill:
 
 ## Install
 
-The skill lives in this repo under `.claude/skills/tailor-resume/`, so it's available whenever
-you run Claude Code from this folder:
+This repo is a Claude Code **plugin marketplace**. In Claude Code, add the marketplace and
+install the plugin:
+
+```
+/plugin marketplace add JBonifay/claude-tailor-resume
+/plugin install tailor-resume@claude-tailor-resume
+```
+
+The `tailor-resume` skill is then available in every project.
+
+<details>
+<summary>Alternatives (no marketplace)</summary>
+
+Run it from a clone (skill is picked up while you work in the folder):
 
 ```bash
 git clone https://github.com/JBonifay/claude-tailor-resume.git
@@ -37,11 +49,12 @@ cd claude-tailor-resume
 claude
 ```
 
-To make it available in **any** project, copy it into your personal skills directory instead:
+or copy the skill into your personal skills directory to have it everywhere:
 
 ```bash
-cp -r .claude/skills/tailor-resume ~/.claude/skills/
+cp -r skills/tailor-resume ~/.claude/skills/
 ```
+</details>
 
 ## Use
 
@@ -60,7 +73,10 @@ with a summary of what it emphasized, reordered, or omitted.
 ## Layout
 
 ```
-.claude/skills/tailor-resume/
+.claude-plugin/
+  ├── marketplace.json          # marketplace manifest (lists the plugin)
+  └── plugin.json               # plugin manifest
+skills/tailor-resume/
   ├── SKILL.md                  # the skill: the 3-step tailoring workflow
   ├── assets/
   │   ├── style.css             # A4, single-column, ATS-friendly design
@@ -82,7 +98,7 @@ offers/<company>/
 Claude runs this for you, but you can render any HTML CV yourself:
 
 ```bash
-node .claude/skills/tailor-resume/scripts/render.mjs <input.html> <output.pdf>
+node skills/tailor-resume/scripts/render.mjs <input.html> <output.pdf>
 ```
 
 A one-off NSS certificate warning from Chrome during rendering is harmless.
